@@ -29,7 +29,15 @@ const TaskList = () => {
   const handleUpdate = async (id, updatedTask) => {
     try {
       const updated = await updateTaskById(id, updatedTask);
-      const newTasks = tasks.map((task) => (task._id === id ? updated : task));
+      const newTasks = tasks.map((task) => {
+        if (task._id === id) {
+          return {
+            ...updated,
+            key: updated._id, // actualiza la clave única con el nuevo id
+          };
+        }
+        return task;
+      });
       setTasks(newTasks);
     } catch (err) {
       console.error(err.message);
@@ -41,6 +49,7 @@ const TaskList = () => {
       await deleteTaskById(id);
       const newTasks = tasks.filter((task) => task._id !== id);
       setTasks(newTasks);
+      console.log(id);
       console.log(newTasks);
     } catch (err) {
       console.error(err.message);
@@ -58,7 +67,6 @@ const TaskList = () => {
     };
     fetchData();
   }, []);
-
 
   return (
     <div className="task-list">

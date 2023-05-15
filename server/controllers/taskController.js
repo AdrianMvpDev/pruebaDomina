@@ -70,10 +70,15 @@ const updateTaskById = async (req, res) => {
       return res.status(401).json({ msg: "Not authorized" });
     }
 
-    task.title = title || task.title;
-    task.description = description || task.description;
+    const updateObj = {};
+    if (title) updateObj.title = title;
+    if (description) updateObj.description = description;
 
-    task = await task.save();
+    task = await Task.findByIdAndUpdate(
+      req.params.id,
+      updateObj,
+      { new: true } // Devuelve el documento actualizado
+    );
 
     res.json(task);
   } catch (err) {
@@ -88,6 +93,7 @@ const updateTaskById = async (req, res) => {
   }
 };
 
+
 const deleteTaskById = async (req, res) => {
   try {
     const task = await Task.findById(req.params.id);
@@ -101,11 +107,11 @@ const deleteTaskById = async (req, res) => {
       return res.status(401).json({ msg: "Not authorized" });
     }
 
-    if (typeof task.remove !== 'function') {
+    const result = await Task.deleteOne({ _id: req.params.id });
+
+    if (result.deletedCount === 0) {
       return res.status(500).json({ msg: "Task cannot be deleted" });
     }
-
-    await task.remove();
 
     res.json({ msg: "Task removed" });
   } catch (err) {
@@ -119,8 +125,6 @@ const deleteTaskById = async (req, res) => {
     res.status(500).send("Server error");
   }
 };
-
-
 
 module.exports = {
   getAllTasks,

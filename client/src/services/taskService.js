@@ -37,19 +37,31 @@ export const getTaskById = async (id) => {
 };
 
 // Actualizar una tarea por ID
-export const updateTaskById = async (id, title, description) => {
-  const res = await axios.put(
-    `${API_URL}/tasks/${id}`,
-    { title, description },
-    { headers: getAuthHeader() }
-  );
-  return res.data;
-};
+export const updateTaskById = async (id, updatedTask) => {
+    const { title, description } = updatedTask;
+    const res = await axios.put(
+      `${API_URL}/tasks/${id}`,
+      { title, description },
+      { headers: getAuthHeader() }
+    );
+    return res.data;
+  };
+  
+  
 
 // Eliminar una tarea por ID
 export const deleteTaskById = async (id) => {
-    const res = await axios.delete(`${API_URL}/tasks/${id}`, {
-      headers: getAuthHeader(),
-    });
-    return res.data;
+    try {
+      const res = await axios.delete(`${API_URL}/tasks/${id}`, {
+        headers: getAuthHeader(),
+      });
+      return res.data;
+    } catch (err) {
+      if (err.response) {
+        throw new Error(err.response.data.msg);
+      } else {
+        throw err;
+      }
+    }
   };
+  
