@@ -5,9 +5,13 @@ import { login, register } from './services/api';
 import LoginForm from './components/auth/LoginForm';
 import SignupForm from './components/auth/SignupForm';
 import TaskList from './components/tasks/TaskList';
+import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isSuccessDialogOpen, setIsSuccessDialogOpen] = useState(false);
+  const [isErrorDialogOpen, setIsErrorDialogOpen] = useState(false);
+  const [dialogMessage, setDialogMessage] = useState('');
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -30,17 +34,27 @@ function App() {
   const handleRegister = async (name, email, password, onRegisterSuccess) => {
     try {
       await register(name, email, password);
-      alert('¡Registro exitoso! Ahora podra crear sus tareas');
+      setDialogMessage('¡Registro exitoso! Ahora podrá crear sus tareas.');
+      setIsSuccessDialogOpen(true);
       onRegisterSuccess();
     } catch (error) {
       console.error(error.message);
-      alert('No se pudo registrar el usuario. Por favor intente nuevamente.');
+      setDialogMessage('No se pudo registrar el usuario. Por favor intente nuevamente.');
+      setIsErrorDialogOpen(true);
     }
   };
 
   const handleLogout = () => {
     localStorage.removeItem('token');
     setIsAuthenticated(false);
+  };
+
+  const handleCloseSuccessDialog = () => {
+    setIsSuccessDialogOpen(false);
+  };
+
+  const handleCloseErrorDialog = () => {
+    setIsErrorDialogOpen(false);
   };
 
   return (
@@ -64,9 +78,27 @@ function App() {
           />
           <Route path="/tasks" element={<TaskList onLogout={handleLogout} />} />
         </Routes>
+        <Dialog open={isSuccessDialogOpen} onClose={handleCloseSuccessDialog}>
+          <DialogTitle>Éxito</DialogTitle>
+          <DialogContent>
+            <DialogContentText>{dialogMessage}</DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleCloseSuccessDialog}>Cerrar</Button>
+          </DialogActions>
+        </Dialog>
+        <Dialog open={isErrorDialogOpen} onClose={handleCloseErrorDialog}>
+          <DialogTitle>Error</DialogTitle>
+          <DialogContent>
+            <DialogContentText>{dialogMessage}</DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleCloseErrorDialog}>Cerrar</Button>
+          </DialogActions>
+        </Dialog>
       </div>
     </Router>
   );
 }
 
-export default App;
+export default App
