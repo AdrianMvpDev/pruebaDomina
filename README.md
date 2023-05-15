@@ -63,5 +63,3 @@ npm start
 ## Creditos
 
 Este proyecto fue desarrollado por Adrian Santamaria para Domina Logistica.
-
-
