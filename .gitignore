@@ -1,0 +1,12 @@
+# Ignorar archivos generados por el sistema
+Thumbs.db
+.DS_Store
+
+# Ignorar directorios específicos
+node_modules/
+dist/
+
+# Ignorar archivos específicos
+config.js
+secrets.txt
+.env
