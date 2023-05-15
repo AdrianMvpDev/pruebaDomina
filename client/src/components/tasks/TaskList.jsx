@@ -49,8 +49,6 @@ const TaskList = () => {
       await deleteTaskById(id);
       const newTasks = tasks.filter((task) => task._id !== id);
       setTasks(newTasks);
-      console.log(id);
-      console.log(newTasks);
     } catch (err) {
       console.error(err.message);
     }

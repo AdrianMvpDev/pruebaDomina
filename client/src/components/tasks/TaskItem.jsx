@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button } from "@mui/material";
+import { TextField, Button } from "@mui/material";
 
 const TaskItem = ({ task, handleUpdate, handleDelete }) => {
   const [isEditing, setIsEditing] = useState(false);
@@ -36,12 +36,12 @@ const TaskItem = ({ task, handleUpdate, handleDelete }) => {
         <th className="task-item__title-heading">Title</th>
         <td className="task-item__title-cell">
           {isEditing ? (
-            <input
-              className="task-item__title-input"
-              type="text"
-              value={updatedTitle}
-              onChange={(e) => setUpdatedTitle(e.target.value)}
-            />
+            <TextField
+            className="task-item__title-input"
+            type="text"
+            value={updatedTitle}
+            onChange={(e) => setUpdatedTitle(e.target.value)}               
+              />
           ) : (
             <p className="task-item__title">{task.title}</p>
           )}
@@ -52,12 +52,12 @@ const TaskItem = ({ task, handleUpdate, handleDelete }) => {
         <th className="task-item__description-heading">Description</th>
         <td className="task-item__description-cell">
           {isEditing ? (
-            <input
-              className="task-item__description-input"
-              type="text"
-              value={updatedDescription}
-              onChange={(e) => setUpdatedDescription(e.target.value)}
-            />
+            <TextField
+                className="task-item__description-input"
+                type="text"
+                value={updatedDescription}
+                onChange={(e) => setUpdatedDescription(e.target.value)}                
+              />
           ) : (
             <p className="task-item__description">{task.description}</p>
           )}
