@@ -1,0 +1,19 @@
+:root{
+  --color-primary: #ffd117;
+  --color-secondary: #1722ff;
+}
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+body {
+  font-family: system-ui;
+}
+a {
+  color: var(--color-primary);
+  text-decoration: none;
+}
+li {
+  list-style: none;
+}
