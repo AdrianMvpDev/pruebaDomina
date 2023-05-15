@@ -1,5 +1,4 @@
 .task-list__title {
-  padding: 20px;
   background: var(--color-primary);
 }
 .task-list__form {
@@ -15,6 +14,12 @@
   h2 {
     text-align: center;
   }
+}
+.task-header {
+  display: flex;
+  justify-content: space-between;
+  background: var(--color-primary);
+  padding: 20px;
 }
 .task-container {
   display: flex;

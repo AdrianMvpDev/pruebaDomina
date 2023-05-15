@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { TextField, Button } from "@mui/material";
 import TaskItem from "./TaskItem";
 import {
   getAllTasks,
@@ -6,8 +7,8 @@ import {
   updateTaskById,
   deleteTaskById,
 } from "../../services/taskService";
+import { logout } from "../../services/api";
 import "../../assets/styles/tasks/task.scss";
-import { TextField, Button } from "@mui/material";
 
 const TaskList = () => {
   const [tasks, setTasks] = useState([]);
@@ -54,6 +55,12 @@ const TaskList = () => {
     }
   };
 
+  const handleLogout = () => {
+    logout(() => {
+      window.location.href = "/login";
+    });
+  };
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -68,7 +75,16 @@ const TaskList = () => {
 
   return (
     <div className="task-list">
-      <h2 className="task-list__title">Task List</h2>
+      <header className="task-header">
+        <h1 className="task-list__title">Task List</h1>
+        <Button
+          variant="contained"
+          className="task-list__button"
+          onClick={handleLogout}
+        >
+          Logout
+        </Button>
+      </header>
       <div className="task-container">
         <form onSubmit={handleSubmit} className="task-list__form">
           <h2>Añadir Tareas</h2>

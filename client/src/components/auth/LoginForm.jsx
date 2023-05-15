@@ -4,7 +4,6 @@ import { TextField, Button } from "@mui/material";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { Link } from "react-router-dom";
 
-
 const theme = createTheme({
   palette: {
     primary: {
@@ -17,15 +16,13 @@ const theme = createTheme({
   },
 });
 
-function LoginForm({ onLogin }) {
+function LoginForm({ onSubmit, isSubmitting }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    onLogin(email, password, () => {
-      window.location.href = "/tasks";
-    });
+    onSubmit(email, password);
   };
 
   return (
@@ -61,10 +58,12 @@ function LoginForm({ onLogin }) {
                 autoComplete="current-password"
               />
             </div>
-            <Button type="submit" variant="contained">
-              Iniciar sesión
+            <Button type="submit" variant="contained" disabled={isSubmitting}>
+              {isSubmitting ? "Iniciando sesión..." : "Iniciar sesión"}
             </Button>
-            <h5>¿No tienes cuenta?  <Link to="/register">Registrate</Link></h5>
+            <h5>
+              ¿No tienes cuenta? <Link to="/register">Registrate</Link>
+            </h5>
           </div>
         </div>
       </form>

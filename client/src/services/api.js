@@ -38,9 +38,10 @@ const register = async (name, email, password) => {
   }
 };
 
-const logout = () => {
+const logout = (callback) => {
   localStorage.removeItem('token');
-};
+  callback();
+}
 
 const getAuthHeader = () => {
   const token = localStorage.getItem('token');

@@ -60,7 +60,7 @@ function App() {
           <Route path="/register" element={<SignupForm onRegister={handleRegister}/>} />
           <Route
             path="/login"
-            element={<LoginForm onLogin={handleLogin} />}
+            element={<LoginForm handleLoginSubmit={handleLogin} />}
           />
           <Route path="/tasks" element={<TaskList onLogout={handleLogout} />} />
         </Routes>

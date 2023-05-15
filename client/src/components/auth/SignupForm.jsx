@@ -30,7 +30,7 @@ function RegisterForm({ onRegister }) {
 
   return (
     <ThemeProvider theme={theme}>
-      <form onSubmit={handleSubmit}>
+      <form  className="form-user" onSubmit={handleSubmit}>
         <div className="form-container">
           <div className="form-background"></div>
           <div className="form-login">
